@@ -7,7 +7,7 @@
   email: contact.email,
   phone: contact.phone, 
   formatted: {
-    updated_at: contact.friendly_updated_at,
+    # updated_at: contact.friendly_updated_at,
     japan_phone_number: contact.japan_phone_number
   }
 }

@@ -17,10 +17,15 @@ class Api::ContactsController < ApplicationController
     middle_name: params[:middle_name], 
     last_name: params[:last_name], 
     phone: params[:phone], 
-    email: params[:email]
+    email: params[:email],
+    user_id: 1
     )
-    @contact.save
-    render 'show.json.jb'
+
+    if @contact.save
+      render 'show.json.jb'
+    else 
+      render json: {errors: @contact.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -39,10 +44,11 @@ class Api::ContactsController < ApplicationController
     @contact.email = params[:email] || @contact.email
   
     
-    @contact.save
-
-    render 'show.json.jb'
-  
+    if @contact.save
+      render 'show.json.jb'
+    else
+      render json: {errors: @contact.errors.full_messages}, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -50,7 +56,7 @@ class Api::ContactsController < ApplicationController
     @contact = Contact.find_by(id: params[:id])
     @contact.destroy
 
-    render json: {message: "Contact successfully destroyed, bye forever"}
+    render json: {message: "Contact destroyed."}
 
 
   end
